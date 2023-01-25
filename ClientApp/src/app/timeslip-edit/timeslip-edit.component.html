@@ -1,0 +1,47 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">{{id}}</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modalRef.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div>
+      <form [formGroup]="form">
+        <div class="form-group">
+          <label>Fecha</label>
+          <input type="date"formControlName="date" id="date" required>
+        </div>
+        <div class="form-group">
+          <label>Hora</label>
+          <input type="time" formControlName="time" id="time" required>
+        </div>
+        <div class="form-group">
+          <label>Departamento</label>
+          <select formControlName="department" (change)="onChangeDepto($event)" id="department">
+            <option></option>
+            <option *ngFor="let depto of departments | async" [value]="depto.departmentId">{{depto.name}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Tarea</label>
+          <select formControlName="task" id="task" required>
+            <option value="0"></option>
+            <option *ngFor="let task of tasks" [value]="task.taskId">{{task.name}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1">Comment</label>
+          <input formControlName="comment" type="text">
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modalRef.close()">
+      Close
+    </button>
+    <button type="button" class="btn btn-primary">Save changes</button>
+  </div>

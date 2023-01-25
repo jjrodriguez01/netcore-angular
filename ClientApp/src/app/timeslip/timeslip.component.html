@@ -1,0 +1,74 @@
+<div class="card">
+    <div class="card-body">
+      <form [formGroup]="form" (ngSubmit)="onCreateSubmit()">
+        <div class="row g-3">
+            <div class="col">
+                <label>Add timeslip on</label>
+                <input type="date"formControlName="date" id="date" required>
+            </div>
+            <div class="col">
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-8">
+              <div class="row">
+                    <div class="col-5">
+                      <select formControlName="department" (change)="onChangeDepto($event)" id="department">
+                        <option></option>
+                        <option *ngFor="let depto of departments | async" [value]="depto.departmentId">{{depto.name}}</option>
+                      </select>
+                  </div>
+                  <div class="col-5">
+                    <select formControlName="task" id="task" required>
+                      <option value="0"></option>
+                      <option *ngFor="let task of tasks" [value]="task.taskId">{{task.name}}</option>
+                    </select>
+                </div>
+                <div class="col-2">
+                  <input type="time" formControlName="time" id="time" required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <input formControlName="comment" type="text">
+                </div>
+              </div>
+            </div>
+            <div class="col-4">
+                <button type="submit" [disabled]="!form.valid">Enviar</button>
+            </div>
+        </div>
+      </form>
+    </div><!--div card body-->
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <p *ngIf="!timeslips?.length"><em>Loading...</em></p>
+
+      <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="timeslips.length">
+        <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Departamento</th>
+            <th>Tarea</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ts of timeslips">
+            <td>{{ ts.userName }}</td>
+            <td>{{ ts.departmentName }}</td>
+            <td>{{ ts.taskName }}</td>
+            <td>{{ ts.shortDate }}</td>
+            <td>{{ ts.hour }}</td>
+            <td><button (click)="editar(ts.timeslipId)" type="button" class="btn btn-primary">Editar</button></td>
+            <td><button (click)="eliminar(ts.timeslipId)" type="button" class="btn btn-danger">Eliminar</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
